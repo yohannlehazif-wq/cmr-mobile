@@ -3,81 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exclusif — Plateforme Premium</title>
+    <title>Exclusif — Espace VIP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .blur-media { filter: blur(22px); transform: scale(1.08); }
+        .blur-media { filter: blur(24px); transform: scale(1.08); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex justify-center">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex justify-center selection:bg-rose-500 selection:text-white">
 
-    <!-- Modal d'Avertissement Majeur -->
+    <!-- Modal d'Avertissement Majeur (+18) -->
     <div id="age-modal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-sm w-full text-center space-y-4 shadow-2xl">
-            <div class="w-12 h-12 bg-rose-500/10 text-rose-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">18+</div>
-            <h2 class="text-xl font-bold">Avertissement Contenu Adulte</h2>
-            <p class="text-slate-400 text-sm">Veuillez confirmer que vous avez au moins 18 ans pour accéder à ce contenu.</p>
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl">
+            <div class="w-14 h-14 bg-gradient-to-tr from-rose-500 to-amber-500 rounded-2xl flex items-center justify-center mx-auto text-2xl font-black text-white shadow-lg shadow-rose-500/30">18+</div>
+            <h2 class="text-xl font-bold">Contenu Réservé aux Majeurs</h2>
+            <p class="text-slate-400 text-sm">Ce profil contient des médias exclusifs pour adultes. Veuillez confirmer votre majorité.</p>
             <div class="space-y-2 pt-2">
-                <button onclick="acceptAge()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl transition">J'ai 18 ans ou plus</button>
+                <button onclick="acceptAge()" class="w-full bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-rose-600/30">J'ai 18 ans ou plus</button>
                 <button onclick="window.location.href='https://www.google.com'" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl transition text-sm">Quitter</button>
             </div>
         </div>
     </div>
 
-    <!-- Interface App Mobile -->
-    <div class="w-full max-w-md bg-slate-900 border-x border-slate-800 min-h-screen flex flex-col">
+    <!-- Application Mobile Centrée -->
+    <div class="w-full max-w-md bg-slate-900 border-x border-slate-800 min-h-screen flex flex-col relative pb-20">
         
-        <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900/90 backdrop-blur z-40">
-            <div>
-                <h1 class="font-extrabold text-xl tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500">EXCLUSIF</h1>
-                <p class="text-xs text-slate-500">Contenus & Teasers Privés</p>
+        <!-- En-tête Fixe -->
+        <header class="p-4 border-b border-slate-800/80 flex justify-between items-center sticky top-0 bg-slate-900/90 backdrop-blur-md z-40">
+            <div class="flex items-center gap-2">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-amber-500 p-0.5">
+                        <img src="https://picsum.photos/id/64/150/150" alt="Avatar" class="w-full h-full object-cover rounded-full">
+                    </div>
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base leading-tight tracking-wide text-white">VIP Exclusive</h1>
+                    <p class="text-[11px] text-emerald-400 font-medium">● En ligne maintenant</p>
+                </div>
             </div>
+            <button onclick="openTipModal()" class="bg-gradient-to-r from-amber-500 to-rose-500 text-slate-950 font-black text-xs px-3.5 py-2 rounded-full shadow-lg shadow-amber-500/20 hover:scale-105 transition active:scale-95">
+                ☕ Envoyer un Tip
+            </button>
         </header>
 
-        <main id="feed-container" class="p-4 space-y-6 flex-1"></main>
+        <!-- Zone de Contenu Déroulant -->
+        <main class="space-y-5 flex-1 p-4">
+
+            <!-- Carrousel de Stories (Teasers rapides) -->
+            <section>
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 px-1">Stories exclusives</h3>
+                <div class="flex gap-3 overflow-x-auto no-scrollbar py-1">
+                    <div onclick="viewStory('Lendemain de soirée... 🤫')" class="flex-shrink-0 text-center space-y-1 cursor-pointer group">
+                        <div class="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-tr from-rose-500 to-amber-500 group-hover:scale-105 transition">
+                            <img src="https://picsum.photos/id/1025/200/200" class="w-full h-full object-cover rounded-[14px]">
+                        </div>
+                        <span class="text-[11px] text-slate-300 font-medium block">Matin ☕</span>
+                    </div>
+                    <div onclick="viewStory('Nouveau costume reçu 🎁')" class="flex-shrink-0 text-center space-y-1 cursor-pointer group">
+                        <div class="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-tr from-rose-500 to-amber-500 group-hover:scale-105 transition">
+                            <img src="https://picsum.photos/id/338/200/200" class="w-full h-full object-cover rounded-[14px]">
+                        </div>
+                        <span class="text-[11px] text-slate-300 font-medium block">Essayage 🔥</span>
+                    </div>
+                    <div onclick="viewStory('Preview de la vidéo de ce soir')" class="flex-shrink-0 text-center space-y-1 cursor-pointer group">
+                        <div class="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-tr from-rose-500 to-amber-500 group-hover:scale-105 transition">
+                            <img src="https://picsum.photos/id/64/200/200" class="w-full h-full object-cover rounded-[14px]">
+                        </div>
+                        <span class="text-[11px] text-slate-300 font-medium block">Backstage 📹</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filtres par Catégorie -->
+            <nav class="flex gap-2 border-b border-slate-800/80 pb-3 overflow-x-auto no-scrollbar">
+                <button onclick="filterFeed('all')" id="tab-all" class="bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition">Tout (3)</button>
+                <button onclick="filterFeed('video')" id="tab-video" class="bg-slate-800 text-slate-400 text-xs font-bold px-4 py-2 rounded-xl transition hover:text-white">📹 Vidéos</button>
+                <button onclick="filterFeed('image')" id="tab-image" class="bg-slate-800 text-slate-400 text-xs font-bold px-4 py-2 rounded-xl transition hover:text-white">📷 Photos</button>
+            </nav>
+
+            <!-- Flux Principal -->
+            <div id="feed-container" class="space-y-6"></div>
+
+        </main>
 
     </div>
 
-    <!-- Modal de Paiement -->
+    <!-- Modal de Paiement / Déblocage -->
     <div id="payment-modal" class="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-6 space-y-4">
+        <div class="bg-slate-900 border border-slate-800 w-full sm:max-w-sm rounded-t-3xl sm:rounded-3xl p-6 space-y-5">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <h3 class="font-bold text-lg">Débloquer le contenu</h3>
-                <button onclick="closePaymentModal()" class="text-slate-500 hover:text-slate-300">✕</button>
+                <button onclick="closePaymentModal()" class="text-slate-500 hover:text-slate-300 text-xl">✕</button>
             </div>
-            <div class="text-center py-2">
-                <p class="text-xs text-slate-400">Tarif du déblocage :</p>
-                <p id="modal-price" class="text-3xl font-black text-rose-500">0,00 €</p>
+            <div class="text-center py-2 space-y-1">
+                <p class="text-xs text-slate-400">Montant de la transaction :</p>
+                <p id="modal-price" class="text-4xl font-black text-rose-500">0,00 €</p>
+                <p class="text-[11px] text-emerald-400 font-medium">✓ Accès illimité à vie après achat</p>
             </div>
-            <button onclick="processPayment()" class="w-full bg-emerald-600 hover:bg-emerald-700 font-bold py-3 rounded-xl transition">
-                Confirmer le paiement (Simulation)
+            <button onclick="processPayment()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-600/20">
+                Payer de manière sécurisée
             </button>
         </div>
     </div>
 
+    <!-- Modal Pourboire (Tip) -->
+    <div id="tip-modal" class="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 w-full sm:max-w-sm rounded-t-3xl sm:rounded-3xl p-6 space-y-5">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-lg">Envoyer un Pourboire ☕</h3>
+                <button onclick="closeTipModal()" class="text-slate-500 hover:text-slate-300 text-xl">✕</button>
+            </div>
+            <p class="text-xs text-slate-400">Soutenez la création de contenu personnalisé.</p>
+            <div class="grid grid-cols-3 gap-3">
+                <button onclick="sendTip(5)" class="bg-slate-800 hover:bg-rose-600/20 border border-slate-700 hover:border-rose-500 font-bold py-3 rounded-xl transition text-rose-400">5 €</button>
+                <button onclick="sendTip(10)" class="bg-slate-800 hover:bg-rose-600/20 border border-slate-700 hover:border-rose-500 font-bold py-3 rounded-xl transition text-rose-400">10 €</button>
+                <button onclick="sendTip(20)" class="bg-slate-800 hover:bg-rose-600/20 border border-slate-700 hover:border-rose-500 font-bold py-3 rounded-xl transition text-rose-400">20 €</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Catalogue avec Teasers (Photos & Vidéos)
         const postsData = [
             {
                 id: "post_1",
-                title: "Teaser Vidéo — Extrait inédit",
-                price: 7.99,
+                title: "Teaser Vidéo — Douche Privée 🚿",
+                price: 9.99,
                 type: "video",
-                // Vidéo teaser gratuite jouée en boucle
+                likes: 142,
                 teaserVideo: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                // Contenu débloqué (simulé)
                 fullImg: "https://picsum.photos/id/1025/800/800",
                 unlocked: false
             },
             {
                 id: "post_2",
-                title: "Aperçu Photo — Shooting Lingerie",
+                title: "Set Lingerie Dentelle Rouge 💋",
                 price: 4.99,
                 type: "image",
-                // Photo teaser non floutée (mise en bouche)
+                likes: 89,
                 teaserImg: "https://picsum.photos/id/64/600/600",
-                // Photo exclusive masquée (floutée jusqu'à l'achat)
                 fullImg: "https://picsum.photos/id/64/1200/1200",
+                unlocked: false
+            },
+            {
+                id: "post_3",
+                title: "Shooting Photo Plage Sauvage 🌊",
+                price: 6.99,
+                type: "image",
+                likes: 215,
+                teaserImg: "https://picsum.photos/id/338/600/600",
+                fullImg: "https://picsum.photos/id/338/1200/1200",
                 unlocked: false
             }
         ];
@@ -89,7 +165,7 @@
                 document.getElementById("age-modal").classList.add("hidden");
             }
             loadPurchases();
-            renderFeed();
+            renderFeed('all');
         });
 
         function acceptAge() {
@@ -104,19 +180,20 @@
             });
         }
 
-        function renderFeed() {
+        function renderFeed(filter = 'all') {
             const container = document.getElementById("feed-container");
             container.innerHTML = "";
 
-            postsData.forEach(post => {
-                const card = document.createElement("article");
-                card.className = "bg-slate-800/50 border border-slate-800 rounded-2xl overflow-hidden shadow-lg space-y-3 p-3";
+            const filteredPosts = postsData.filter(post => filter === 'all' || post.type === filter);
 
-                // En-tête de la carte
+            filteredPosts.forEach(post => {
+                const card = document.createElement("article");
+                card.className = "bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl space-y-3 p-3.5";
+
                 let headerHTML = `
                     <div class="flex items-center justify-between px-1">
                         <h4 class="font-bold text-slate-100 text-sm">${post.title}</h4>
-                        <span class="text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full font-semibold">
+                        <span class="text-[10px] bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full font-bold">
                             ${post.type === 'video' ? '📹 Vidéo HD' : '📷 Photo HD'}
                         </span>
                     </div>
@@ -125,35 +202,26 @@
                 let mediaHTML = '';
 
                 if (post.unlocked) {
-                    // Contenu débloqué après achat
                     mediaHTML = `
                         <div class="relative aspect-square bg-slate-950 rounded-xl overflow-hidden border border-emerald-500/30">
                             <img src="${post.fullImg}" alt="Contenu complet" class="w-full h-full object-cover">
-                            <div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-full shadow">
-                                ✓ Contenu Débloqué
+                            <div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-full shadow-lg">
+                                ✓ Débloqué
                             </div>
                         </div>
                     `;
                 } else {
-                    // Mode verrouillé avec Teaser / Mise en bouche
-                    let teaserElement = '';
-                    if (post.type === 'video') {
-                        teaserElement = `
-                            <video src="${post.teaserVideo}" autoplay loop muted playsinline class="w-full h-full object-cover opacity-60"></video>
-                        `;
-                    } else {
-                        teaserElement = `
-                            <img src="${post.teaserImg}" alt="Aperçu" class="w-full h-full object-cover blur-media">
-                        `;
-                    }
+                    let teaserElement = post.type === 'video' 
+                        ? `<video src="${post.teaserVideo}" autoplay loop muted playsinline class="w-full h-full object-cover opacity-50"></video>`
+                        : `<img src="${post.teaserImg}" alt="Aperçu" class="w-full h-full object-cover blur-media opacity-80">`;
 
                     mediaHTML = `
                         <div class="relative aspect-square bg-slate-950 rounded-xl overflow-hidden">
                             ${teaserElement}
                             <div class="absolute inset-0 bg-black/40 backdrop-blur-xs flex flex-col items-center justify-center p-4 text-center">
-                                <div class="w-11 h-11 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-lg mb-2">🔒</div>
-                                <p class="text-xs text-slate-300 font-medium mb-3">Accédez à la version complète sans censure</p>
-                                <button onclick="openPaymentModal('${post.id}')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-lg shadow-rose-600/30">
+                                <div class="w-12 h-12 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-xl mb-2 shadow-inner">🔒</div>
+                                <p class="text-xs text-slate-300 font-medium mb-3">Accès exclusif sans censure</p>
+                                <button onclick="openPaymentModal('${post.id}')" class="bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition shadow-lg shadow-rose-600/30">
                                     Débloquer pour ${post.price.toFixed(2).replace('.', ',')} €
                                 </button>
                             </div>
@@ -161,9 +229,55 @@
                     `;
                 }
 
-                card.innerHTML = headerHTML + mediaHTML;
+                let footerHTML = `
+                    <div class="flex items-center justify-between px-1 text-xs text-slate-400 pt-1">
+                        <button onclick="toggleLike('${post.id}')" class="flex items-center gap-1.5 hover:text-rose-500 transition">
+                            <span id="like-icon-${post.id}">❤️</span>
+                            <span id="like-count-${post.id}" class="font-semibold">${post.likes}</span>
+                        </button>
+                        <span class="text-[11px] text-slate-500">Contenu Privé</span>
+                    </div>
+                `;
+
+                card.innerHTML = headerHTML + mediaHTML + footerHTML;
                 container.appendChild(card);
             });
+        }
+
+        function filterFeed(type) {
+            ['all', 'video', 'image'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === type) {
+                    btn.className = "bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition";
+                } else {
+                    btn.className = "bg-slate-800 text-slate-400 text-xs font-bold px-4 py-2 rounded-xl transition hover:text-white";
+                }
+            });
+            renderFeed(type);
+        }
+
+        function toggleLike(postId) {
+            const post = postsData.find(p => p.id === postId);
+            if (!post) return;
+            post.likes++;
+            document.getElementById(`like-count-${postId}`).innerText = post.likes;
+        }
+
+        function viewStory(title) {
+            alert(`Story : ${title}`);
+        }
+
+        function openTipModal() {
+            document.getElementById("tip-modal").classList.remove("hidden");
+        }
+
+        function closeTipModal() {
+            document.getElementById("tip-modal").classList.add("hidden");
+        }
+
+        function sendTip(amount) {
+            closeTipModal();
+            alert(`Merci pour votre pourboire de ${amount} € ! 💖`);
         }
 
         function openPaymentModal(postId) {
