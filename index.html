@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Content — Plateforme Exclusive</title>
+    <title>Exclusif — Plateforme Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .blur-media { filter: blur(25px); transform: scale(1.1); }
+        .blur-media { filter: blur(22px); transform: scale(1.08); }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex justify-center">
 
-    <!-- Modal d'Avertissement d'Âge -->
+    <!-- Modal d'Avertissement Majeur -->
     <div id="age-modal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-sm w-full text-center space-y-4 shadow-2xl">
             <div class="w-12 h-12 bg-rose-500/10 text-rose-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">18+</div>
-            <h2 class="text-xl font-bold">Contenu Réservé aux Majeurs</h2>
-            <p class="text-slate-400 text-sm">Ce site contient des images exclusives pour adultes. Veuillez confirmer votre majorité pour continuer.</p>
+            <h2 class="text-xl font-bold">Avertissement Contenu Adulte</h2>
+            <p class="text-slate-400 text-sm">Veuillez confirmer que vous avez au moins 18 ans pour accéder à ce contenu.</p>
             <div class="space-y-2 pt-2">
                 <button onclick="acceptAge()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl transition">J'ai 18 ans ou plus</button>
                 <button onclick="window.location.href='https://www.google.com'" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl transition text-sm">Quitter</button>
@@ -24,29 +24,21 @@
         </div>
     </div>
 
-    <!-- Application Principale (Container Mobile) -->
+    <!-- Interface App Mobile -->
     <div class="w-full max-w-md bg-slate-900 border-x border-slate-800 min-h-screen flex flex-col">
         
-        <!-- En-tête -->
         <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900/90 backdrop-blur z-40">
             <div>
                 <h1 class="font-extrabold text-xl tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500">EXCLUSIF</h1>
-                <p class="text-xs text-slate-500">Espace créateur</p>
-            </div>
-            <div class="bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-2">
-                <span class="text-xs text-slate-400">Solde :</span>
-                <span id="user-balance" class="text-sm font-bold text-amber-400">0,00 €</span>
+                <p class="text-xs text-slate-500">Contenus & Teasers Privés</p>
             </div>
         </header>
 
-        <!-- Flux de contenus -->
-        <main id="feed-container" class="p-4 space-y-6 flex-1">
-            <!-- Les publications seront générées dynamiquement par JS -->
-        </main>
+        <main id="feed-container" class="p-4 space-y-6 flex-1"></main>
 
     </div>
 
-    <!-- Modal de Paiement Factice -->
+    <!-- Modal de Paiement -->
     <div id="payment-modal" class="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-6 space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -54,42 +46,44 @@
                 <button onclick="closePaymentModal()" class="text-slate-500 hover:text-slate-300">✕</button>
             </div>
             <div class="text-center py-2">
-                <p class="text-xs text-slate-400">Prix de la photo :</p>
+                <p class="text-xs text-slate-400">Tarif du déblocage :</p>
                 <p id="modal-price" class="text-3xl font-black text-rose-500">0,00 €</p>
             </div>
-            <div class="space-y-3">
-                <p class="text-xs text-slate-400 text-center">Simulation de paiement (Passerelle High-Risk CCBill / Paxum)</p>
-                <button onclick="processPayment()" class="w-full bg-emerald-600 hover:bg-emerald-700 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
-                    <span>💳 Confirm Payment</span>
-                </button>
-            </div>
+            <button onclick="processPayment()" class="w-full bg-emerald-600 hover:bg-emerald-700 font-bold py-3 rounded-xl transition">
+                Confirmer le paiement (Simulation)
+            </button>
         </div>
     </div>
 
     <script>
-        // Données d'exemple (Catalogue de photos)
+        // Catalogue avec Teasers (Photos & Vidéos)
         const postsData = [
             {
                 id: "post_1",
-                title: "Shooting privé — Session 1",
-                price: 4.99,
-                blurImg: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=600&auto=format&fit=crop",
-                unlockedImg: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1200&auto=format&fit=crop", // Simulation image débloquée
+                title: "Teaser Vidéo — Extrait inédit",
+                price: 7.99,
+                type: "video",
+                // Vidéo teaser gratuite jouée en boucle
+                teaserVideo: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                // Contenu débloqué (simulé)
+                fullImg: "https://picsum.photos/id/1025/800/800",
                 unlocked: false
             },
             {
                 id: "post_2",
-                title: "Exclusivité du week-end",
-                price: 9.99,
-                blurImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
-                unlockedImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop",
+                title: "Aperçu Photo — Shooting Lingerie",
+                price: 4.99,
+                type: "image",
+                // Photo teaser non floutée (mise en bouche)
+                teaserImg: "https://picsum.photos/id/64/600/600",
+                // Photo exclusive masquée (floutée jusqu'à l'achat)
+                fullImg: "https://picsum.photos/id/64/1200/1200",
                 unlocked: false
             }
         ];
 
         let selectedPostId = null;
 
-        // Initialisation au chargement
         document.addEventListener("DOMContentLoaded", () => {
             if (localStorage.getItem("age_confirmed") === "true") {
                 document.getElementById("age-modal").classList.add("hidden");
@@ -103,46 +97,62 @@
             document.getElementById("age-modal").classList.add("hidden");
         }
 
-        // Charger les achats depuis le stockage local du navigateur
         function loadPurchases() {
             const purchases = JSON.parse(localStorage.getItem("purchased_posts") || "[]");
             postsData.forEach(post => {
-                if (purchases.includes(post.id)) {
-                    post.unlocked = true;
-                }
+                if (purchases.includes(post.id)) post.unlocked = true;
             });
         }
 
-        // Afficher les cartes de contenu
         function renderFeed() {
             const container = document.getElementById("feed-container");
             container.innerHTML = "";
 
             postsData.forEach(post => {
                 const card = document.createElement("article");
-                card.className = "bg-slate-800/50 border border-slate-800 rounded-2xl overflow-hidden shadow-lg";
+                card.className = "bg-slate-800/50 border border-slate-800 rounded-2xl overflow-hidden shadow-lg space-y-3 p-3";
+
+                // En-tête de la carte
+                let headerHTML = `
+                    <div class="flex items-center justify-between px-1">
+                        <h4 class="font-bold text-slate-100 text-sm">${post.title}</h4>
+                        <span class="text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2 py-0.5 rounded-full font-semibold">
+                            ${post.type === 'video' ? '📹 Vidéo HD' : '📷 Photo HD'}
+                        </span>
+                    </div>
+                `;
+
+                let mediaHTML = '';
 
                 if (post.unlocked) {
-                    card.innerHTML = `
-                        <div class="relative aspect-square bg-slate-950 overflow-hidden">
-                            <img src="${post.blurImg}" alt="Contenu débloqué" class="w-full h-full object-cover">
+                    // Contenu débloqué après achat
+                    mediaHTML = `
+                        <div class="relative aspect-square bg-slate-950 rounded-xl overflow-hidden border border-emerald-500/30">
+                            <img src="${post.fullImg}" alt="Contenu complet" class="w-full h-full object-cover">
                             <div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-full shadow">
-                                ✓ Débloqué
+                                ✓ Contenu Débloqué
                             </div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-semibold text-slate-200">${post.title}</h4>
-                            <p class="text-xs text-emerald-400 mt-1">Vous avez accès à ce contenu.</p>
                         </div>
                     `;
                 } else {
-                    card.innerHTML = `
-                        <div class="relative aspect-square bg-slate-950 overflow-hidden">
-                            <img src="${post.blurImg}" alt="Contenu verrouillé" class="w-full h-full object-cover blur-media">
-                            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
-                                <div class="w-12 h-12 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-xl mb-3">🔒</div>
-                                <h3 class="font-bold text-white text-base mb-1">${post.title}</h3>
-                                <p class="text-xs text-slate-300 mb-4">Contenu premium réservé aux abonnés</p>
+                    // Mode verrouillé avec Teaser / Mise en bouche
+                    let teaserElement = '';
+                    if (post.type === 'video') {
+                        teaserElement = `
+                            <video src="${post.teaserVideo}" autoplay loop muted playsinline class="w-full h-full object-cover opacity-60"></video>
+                        `;
+                    } else {
+                        teaserElement = `
+                            <img src="${post.teaserImg}" alt="Aperçu" class="w-full h-full object-cover blur-media">
+                        `;
+                    }
+
+                    mediaHTML = `
+                        <div class="relative aspect-square bg-slate-950 rounded-xl overflow-hidden">
+                            ${teaserElement}
+                            <div class="absolute inset-0 bg-black/40 backdrop-blur-xs flex flex-col items-center justify-center p-4 text-center">
+                                <div class="w-11 h-11 bg-rose-500/20 text-rose-500 rounded-full flex items-center justify-center text-lg mb-2">🔒</div>
+                                <p class="text-xs text-slate-300 font-medium mb-3">Accédez à la version complète sans censure</p>
                                 <button onclick="openPaymentModal('${post.id}')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-lg shadow-rose-600/30">
                                     Débloquer pour ${post.price.toFixed(2).replace('.', ',')} €
                                 </button>
@@ -151,11 +161,11 @@
                     `;
                 }
 
+                card.innerHTML = headerHTML + mediaHTML;
                 container.appendChild(card);
             });
         }
 
-        // Gestion du modal de paiement
         function openPaymentModal(postId) {
             const post = postsData.find(p => p.id === postId);
             if (!post) return;
@@ -171,18 +181,13 @@
 
         function processPayment() {
             if (!selectedPostId) return;
-
-            // Enregistrer l'achat localement
             const purchases = JSON.parse(localStorage.getItem("purchased_posts") || "[]");
             if (!purchases.includes(selectedPostId)) {
                 purchases.push(selectedPostId);
                 localStorage.setItem("purchased_posts", JSON.stringify(purchases));
             }
-
-            // Mettre à jour l'état local
             const post = postsData.find(p => p.id === selectedPostId);
             if (post) post.unlocked = true;
-
             closePaymentModal();
             renderFeed();
         }
